@@ -5,10 +5,10 @@
         <div class="navbar-item is-size-4 is-family-monospace">VueNotes</div>
 
         <a
-        @click.prevent="showMobileNav = !showMobileNav"
+          @click.prevent="showMobileNav = !showMobileNav"
           role="button"
           class="navbar-burger"
-          :class="{'is-active' : showMobileNav}"
+          :class="{ 'is-active': showMobileNav }"
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
@@ -19,13 +19,26 @@
         </a>
       </div>
 
-      <div id="navbarBasicExample" class="navbar-menu"
-      :class="{'is-active' : showMobileNav}">
+      <div
+        id="navbarBasicExample"
+        class="navbar-menu"
+        :class="{ 'is-active': showMobileNav }"
+      >
         <div class="navbar-end">
-          <RouterLink to="/" class="navbar-item" active-class="is-active">
+          <RouterLink
+            @click="showMobileNav = false"
+            to="/"
+            class="navbar-item"
+            active-class="is-active"
+          >
             Notes
           </RouterLink>
-          <RouterLink to="/stats" class="navbar-item" active-class="is-active">
+          <RouterLink
+            @click="showMobileNav = false"
+            to="/stats"
+            class="navbar-item"
+            active-class="is-active"
+          >
             Stats
           </RouterLink>
         </div>
@@ -44,7 +57,7 @@ import { ref } from 'vue';
   mobile nav
 */
 
-const showMobileNav = ref(false)
+const showMobileNav = ref(false);
 </script>
 
 <style>
