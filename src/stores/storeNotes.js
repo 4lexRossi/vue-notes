@@ -31,7 +31,7 @@ export const useStoreNotes = defineStore('storeNotes', {
     },
     updateNote(id, content) {
       //doing without return and curly bracketes
-      const index = this.notes.findIndex(note => note.id === id);
+      const index = this.notes.findIndex((note) => note.id === id);
       this.notes[index].content = content;
     },
   },
@@ -39,11 +39,22 @@ export const useStoreNotes = defineStore('storeNotes', {
     getNoteContent: (state) => {
       return (id) => {
         return state.notes.filter((f) =>
-        //doing with return inside curly bracketes
-        {
-          return f.id === id;
-        })[0].content;
+          //doing with return inside curly bracketes
+          {
+            return f.id === id;
+          }
+        )[0].content;
       };
+    },
+    totalNotesCount: (state) => {
+      return state.notes.length;
+    },
+    totalCharactersCount: (state) => {
+      let count = 0;
+      state.notes.forEach((note) => {
+        count += note.content.length;
+      });
+      return count;
     },
   },
 });
