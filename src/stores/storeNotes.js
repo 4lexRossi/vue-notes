@@ -29,11 +29,18 @@ export const useStoreNotes = defineStore('storeNotes', {
     deleteNote(id) {
       this.notes = this.notes.filter((f) => f.id !== id);
     },
+    updateNote(id, content) {
+      //doing without return and curly bracketes
+      const index = this.notes.findIndex(note => note.id === id);
+      this.notes[index].content = content;
+    },
   },
   getters: {
     getNoteContent: (state) => {
       return (id) => {
-        return state.notes.filter((f) => {
+        return state.notes.filter((f) =>
+        //doing with return inside curly bracketes
+        {
           return f.id === id;
         })[0].content;
       };
