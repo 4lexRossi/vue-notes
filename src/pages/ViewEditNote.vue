@@ -5,8 +5,12 @@
       bgColor="link"
       placeholder="Edit Note"
       label="Edit Note"
-      ref="addEditNoteRef">
+      ref="addEditNoteRef"
+    >
       <template #buttons>
+        <button @click="$router.back()" class="button is-link is-light">
+          Cancel
+        </button>
         <button
           class="button is-link has-background-link"
           :disabled="!noteContent"
@@ -24,10 +28,21 @@
 */
 import { ref } from 'vue';
 import AddEditNote from '@/components/notes/AddEditNote.vue';
+import { useStoreNotes } from '../stores/storeNotes';
+import { useRoute } from 'vue-router';
+
+/*
+  router
+*/
+const route = useRoute()
 
 /*
   note
 */
-  const noteContent = ref('')
 
+const storeNotes = useStoreNotes();
+
+const noteContent = ref('');
+
+noteContent.value = storeNotes.getNoteContent(route.params.id)
 </script>
