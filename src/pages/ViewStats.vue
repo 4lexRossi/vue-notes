@@ -27,6 +27,7 @@
 */
 
 import { useStoreNotes } from '@/stores/storeNotes';
+import { vAutofocus } from '@/directives/vAutofocus';
 
 /*
   const
