@@ -6,10 +6,13 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 import { db } from '@/js/firebase';
 
 const notesCollectionRef = collection(db, 'notes');
+const notesCollectionQuery = query(notesCollectionRef, orderBy('id', 'desc'));
 
 export const useStoreNotes = defineStore('storeNotes', {
   state: () => {
@@ -19,7 +22,7 @@ export const useStoreNotes = defineStore('storeNotes', {
   },
   actions: {
     async getNotes() {
-      onSnapshot(notesCollectionRef, (querySnapshot) => {
+      onSnapshot(notesCollectionQuery, (querySnapshot) => {
         let notes = [];
         querySnapshot.forEach((doc) => {
           const note = {
@@ -33,10 +36,11 @@ export const useStoreNotes = defineStore('storeNotes', {
     },
 
     async addNote(newNoteContent) {
-      const currentDate = new Date().getTime() + Math.random(2),
+      const currentDate = new Date().getTime(),
         id = currentDate.toString();
       await setDoc(doc(notesCollectionRef, id), {
         content: newNoteContent,
+        id,
       });
     },
     async deleteNote(id) {
@@ -44,8 +48,8 @@ export const useStoreNotes = defineStore('storeNotes', {
     },
     async updateNote(id, content) {
       await updateDoc(doc(notesCollectionRef, id), {
-        content
-      })
+        content,
+      });
     },
   },
   getters: {
