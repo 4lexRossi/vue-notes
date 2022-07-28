@@ -59,6 +59,13 @@
 */
 
 import { computed, reactive, ref } from 'vue';
+import { useStoreAuth } from '@/stores/storeAuth';
+
+/*
+  store
+*/
+
+const storeAuth = useStoreAuth();
 
 /*
   functions
@@ -71,13 +78,13 @@ const formTitle = computed(() => {
 });
 
 const onSubmit = () => {
-  if(!credentials.email || !credentials.password) {
-    return alert('what')
+  if (!credentials.email || !credentials.password) {
+    return alert('what');
   }
-  if(!register.value) {
-   return console.log('login')
+  if (!register.value) {
+    return console.log('login');
   }
-  console.log('Register')
+  storeAuth.registerUser(credentials)
 };
 
 /*
