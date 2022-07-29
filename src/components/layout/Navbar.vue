@@ -26,15 +26,17 @@
         :class="{ 'is-active': showMobileNav }"
         ref="navbarMenuRef"
       >
-        <div class="navbar-start">
+        <div v-if="storeAuth.user.id" class="navbar-start">
           <button
-            @click="storeAuth.logoutUser"
-            class="button is-small is-info mt-3 ml-3">
-          Log out
+            @click="logout"
+            class="button is-small is-info mt-3 ml-3"
+          >
+            Log out | {{ storeAuth.user.email }}
           </button>
         </div>
         <div class="navbar-end">
           <RouterLink
+            v-if="storeAuth.user.id"
             @click="showMobileNav = false"
             to="/"
             class="navbar-item"
@@ -43,6 +45,7 @@
             Notes
           </RouterLink>
           <RouterLink
+            v-if="storeAuth.user.id"
             @click="showMobileNav = false"
             to="/stats"
             class="navbar-item"
@@ -75,14 +78,27 @@ const storeAuth = useStoreAuth();
 */
 
 const showMobileNav = ref(false);
-const navbarMenuRef = ref(null)
-const navbarBurgerRef = ref(null)
+const navbarMenuRef = ref(null);
+const navbarBurgerRef = ref(null);
 
-onClickOutside(navbarMenuRef, () => {
-  showMobileNav.value = false
-}, {
-  ignore: [navbarBurgerRef]
-})
+/*
+  functions
+*/
+
+onClickOutside(
+  navbarMenuRef,
+  () => {
+    showMobileNav.value = false;
+  },
+  {
+    ignore: [navbarBurgerRef],
+  }
+);
+
+const logout = () => {
+  showMobileNav.value = false;
+  storeAuth.logoutUser();
+};
 </script>
 
 <style>

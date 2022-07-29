@@ -10,19 +10,19 @@
   imports
 */
 import Navbar from './components/layout/Navbar.vue';
-import { useStoreNotes } from '@/stores/storeNotes';
+import { useStoreAuth } from '@/stores/storeAuth';
 import { onMounted } from 'vue';
 
 /*
   store
 */
-const storeNotes = useStoreNotes()
+const storeAuth = useStoreAuth()
 
 /*
   hooks
 */
   onMounted(() => {
-    storeNotes.getNotes()
+    storeAuth.init()
   })
 
 </script>

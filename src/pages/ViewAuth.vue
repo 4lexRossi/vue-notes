@@ -82,7 +82,7 @@ const onSubmit = () => {
     return alert('what');
   }
   if (!register.value) {
-    return console.log('login');
+    return storeAuth.loginUser(credentials)
   }
   storeAuth.registerUser(credentials)
 };

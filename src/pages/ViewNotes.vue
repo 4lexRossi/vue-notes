@@ -39,7 +39,7 @@
 /*
   imports
 */
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Note from '@/components/notes/Note.vue';
 import AddEditNote from '@/components/notes/AddEditNote.vue';
 import { useStoreNotes } from '@/stores/storeNotes';
@@ -69,4 +69,11 @@ const addNote = () => {
 */
 
 useWatchCharacters(newNote, 10);
+
+/*
+  hooks
+*/
+onMounted(() => {
+  storeNotes.getNotes();
+});
 </script>

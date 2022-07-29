@@ -1,28 +1,65 @@
 import { defineStore } from 'pinia';
-import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { auth } from '@/js/firebase';
 
 export const useStoreAuth = defineStore('storeAuth', {
   state: () => {
-    return {};
+    return {
+      user: {},
+    };
   },
   actions: {
+    init() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          this.user.id = user.uid;
+          this.user.email = user.email;
+          this.router.push('/')
+        } else {
+          this.user = {};
+          this.router.replace('/auth')
+        }
+      });
+    },
     registerUser(credentials) {
-      createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
+      createUserWithEmailAndPassword(
+        auth,
+        credentials.email,
+        credentials.password
+      )
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-        }).catch((error) => {
-          const errorMessage = error.message;
-          console.log(errorMessage)
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
+    loginUser(credentials) {
+      signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log(error.message);
         });
     },
     logoutUser() {
-      signOut(auth).then(() => {
-        // Sign-out successful.
-      }).catch((error) => {
-        // An error happened.
-      });
-    }
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    },
   },
 });
